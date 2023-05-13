@@ -5,7 +5,7 @@ module.exports = ({ env }) => {
 
   const connections = {
     mysql: {
-      connection: {
+        connection: {
         connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', 'localhost'),
         port: env.int('DATABASE_PORT', 3306),
@@ -27,8 +27,8 @@ module.exports = ({ env }) => {
       pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
     },
     mysql2: {
-      connection: {
-        host: env('DATABASE_HOST', 'localhost'),
+        connection: {
+            host: env('DATABASE_HOST', 'localhost'),
         port: env.int('DATABASE_PORT', 3306),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
@@ -40,8 +40,8 @@ module.exports = ({ env }) => {
           capath: env('DATABASE_SSL_CAPATH', undefined),
           cipher: env('DATABASE_SSL_CIPHER', undefined),
           rejectUnauthorized: env.bool(
-            'DATABASE_SSL_REJECT_UNAUTHORIZED',
-            true
+              'DATABASE_SSL_REJECT_UNAUTHORIZED',
+              true
           ),
         },
       },
@@ -49,44 +49,96 @@ module.exports = ({ env }) => {
     },
     postgres: {
       connection: {
-        connectionString: env('DATABASE_URL'),
+          connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', 'localhost'),
         port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
         ssl: env.bool('DATABASE_SSL', false) && {
-          key: env('DATABASE_SSL_KEY', undefined),
-          cert: env('DATABASE_SSL_CERT', undefined),
-          ca: env('DATABASE_SSL_CA', undefined),
-          capath: env('DATABASE_SSL_CAPATH', undefined),
+            key: env('DATABASE_SSL_KEY', undefined),
+            cert: env('DATABASE_SSL_CERT', undefined),
+            ca: env('DATABASE_SSL_CA', undefined),
+            capath: env('DATABASE_SSL_CAPATH', undefined),
           cipher: env('DATABASE_SSL_CIPHER', undefined),
           rejectUnauthorized: env.bool(
-            'DATABASE_SSL_REJECT_UNAUTHORIZED',
-            true
-          ),
+              'DATABASE_SSL_REJECT_UNAUTHORIZED',
+              true
+            ),
+          },
+          schema: env('DATABASE_SCHEMA', 'public'),
         },
-        schema: env('DATABASE_SCHEMA', 'public'),
+        pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
-    },
-    sqlite: {
-      connection: {
-        filename: path.join(
-          __dirname,
-          '..',
-          env('DATABASE_FILENAME', 'data.db')
-        ),
-      },
-      useNullAsDefault: true,
+      sqlite: {
+          connection: {
+              filename: path.join(
+                  __dirname,
+                  '..',
+                  env('DATABASE_FILENAME', 'data.db')
+                ),
+              },
+              useNullAsDefault: true,
     },
   };
 
   return {
-    connection: {
-      client,
-      ...connections[client],
-      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
-    },
-  };
-};
+      connection: {
+          client,
+          ...connections[client],
+          acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+        },
+      };
+    };
+
+
+
+
+
+        
+    
+
+
+
+
+//  const parse = require("pg-connection-string").parse;
+//  const config = parse(process.env.DATABASE_URL);
+//  module.exports = ({ env }) => ({
+//    connection: {
+//      client: "postgres",
+//      connection: {
+//        host: config.host,
+//        port: config.port,
+//        database: config.database,
+//        user: config.user,
+//        password: config.password,
+//        ssl: {
+//          rejectUnauthorized: false,
+//        },
+//      },
+//      debug: false,
+//    },
+//  });
+
+
+//     module.exports = ({ env }) => ({
+//       defaultConnection: "default",
+//       connection: {
+//         client: "postgres",
+//         connection: {
+//           host: env("DATABASE_HOST", "localhost"),
+//           port: env.int("DATABASE_PORT", 5432),
+//           database: env("DATABASE_NAME", "product"),
+//           username: env("DATABASE_USERNAME", "postgres"),
+//           password: env("DATABASE_PASSWORD", "ashutosh@402"),
+//           schema: env("DATABASE_SCHEMA", "public"),
+//         },
+//       },
+//     });
+
+
+
+
+
+
+
